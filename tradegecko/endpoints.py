@@ -1,4 +1,4 @@
-from api import ApiEndpoint
+from .api import ApiEndpoint
 
 
 class Composition(ApiEndpoint):

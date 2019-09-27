@@ -38,7 +38,7 @@ class ApiEndpoint(object):
         self._data_name = ''
 
     def _send_request(self, method, uri, data=None, params=None):
-        self.rsp = requests.request(method, uri, data=data, headers=self.header, params=params)
+        self.rsp = requests.request(method, uri, data=data, headers=self.header, params=params, verify=False)
         logger.info('TRADEGECKO API REQUEST: %s %s \nDATA="%s" \nPARAMS="%s" \nRESPONSE="%s" \nSTATUS_CODE: %s' % (method, uri, data, params, self.rsp.content, self.rsp.status_code))
         if self.rsp.status_code == 401:
             raise TGAuthFailure

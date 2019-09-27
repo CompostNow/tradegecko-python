@@ -9,7 +9,7 @@ setup(
     author_email = 'team@epantry.com',
     url = 'https://github.com/epantry/tradegecko-python',
     keywords = ['tradegecko'],
-    install_requires = ['requests==2.3.0'],
+    install_requires = ['requests'],
     packages = find_packages(),
     include_package_data=True,
 )
