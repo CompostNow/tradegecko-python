@@ -1,110 +1,93 @@
-import logging
-import requests
-import json
 import math
+import logging
+
+import requests
+
+from tradegecko import errors
+
 
 logger = logging.getLogger(__name__)
 
 
-class TGRequestFailure(Exception):
-    pass
-
-
-class TGAuthFailure(TGRequestFailure):
-    pass
-
-
-class TGUnprocessableEntityFailure(TGRequestFailure):
-    pass
-
-
-class TGRateLimitFailure(TGRequestFailure):
-    pass
-
-
 class ApiEndpoint(object):
-
-    def __init__(self, base_uri, access_token):
-        self.access_token = access_token
+    def __init__(self, url, auth_token, name, name_list, required_fields=None):
+        self.url = url
+        self.auth_token = auth_token
         self.header = {
-            'Authorization': 'Bearer ' + self.access_token,
-            'content-type': 'application/json'
+            "Authorization": f"Bearer {self.auth_token}",
+            "content-type": "application/json",
         }
-        self.rsp = None
+        self.response = None
         self.json = None
-        self.base_uri = base_uri
-        self.uri = ''
-        self.required_fields = []
-        self._data_name = ''
+        self.name = name
+        self.name_list = name_list
+        self.required_fields = required_fields or []
 
-    def _send_request(self, method, uri, data=None, params=None):
-        self.rsp = requests.request(method, uri, data=data, headers=self.header, params=params, verify=False)
-        logger.info('TRADEGECKO API REQUEST: %s %s \nDATA="%s" \nPARAMS="%s" \nRESPONSE="%s" \nSTATUS_CODE: %s' % (method, uri, data, params, self.rsp.content, self.rsp.status_code))
-        if self.rsp.status_code == 401:
-            raise TGAuthFailure
-        if self.rsp.status_code == 422:
-            raise TGUnprocessableEntityFailure(self.rsp.content)
-        if self.rsp.status_code == 429:
-            raise TGRateLimitFailure
-        return self.rsp.status_code
-
-    def _build_data(self, data):
-        return json.dumps({self._data_name: data})
+    def _request(self, method, uri, data=None, params=None):
+        self.response = requests.request(
+            method,
+            uri,
+            json=data,
+            headers=self.header,
+            params=params,
+            verify=False,
+        )
+        logger.debug(
+            'Request: %s %s\nDATA="%s"\nPARAMS="%s"\nRESPONSE="%s"\nSTATUS=%s',
+            method,
+            uri,
+            data,
+            params,
+            self.response.content,
+            self.response.status_code,
+        )
+        if self.response.status_code == 401:
+            raise errors.AuthenticationError(message=self.response.content)
+        if self.response.status_code == 422:
+            raise errors.ProcessingError(message=self.response.content)
+        if self.response.status_code == 429:
+            raise errors.RateLimitExceeded(message=self.response.content)
+        return self.response.status_code
 
     # all records
     def all(self, page=1):
-        uri = self.uri % ''
-        params = {'page': page}
-        if self._send_request('GET', uri, params=params) == 200:
-            return self.rsp.json()
-        else:
-            return False
-
-    # retrieve a specific record
-    def get(self, pk):
-        uri = self.uri % str(pk)
-        if self._send_request('GET', uri) == 200:
-            return self.rsp.json()
-        else:
-            return False
+        if self._request("GET", self.url % "", params={"page": page}) == 200:
+            return self.response.json()[self.name_list]
+        raise errors.ListObjectsError(message=self.response.content)
 
     # records filtered by field value
     def filter(self, **kwargs):
-        uri = self.uri % ''
-        if self._send_request('GET', uri, params=kwargs) == 200:
-            return self.rsp.json()
-        else:
-            return False
+        if self._request("GET", self.url % "", params=kwargs) == 200:
+            return self.response.json()[self.name_list]
+        raise errors.ListObjectsError(message=self.response.content)
 
-    # delete a specific record
-    def delete(self, pk):
-        uri = self.uri % str(pk)
-        if self._send_request('DELETE', uri) == 204:
-            return self.rsp
-        else:
-            return False
+    # retrieve a specific record
+    def get(self, pk):
+        if self._request("GET", self.url % str(pk)) == 200:
+            return self.response.json()[self.name]
+        raise errors.GetObjectError(message=self.response.content)
 
     # create a new record
     def create(self, data):
-        uri = self.uri % ''
-        data = self._build_data(data)
-
-        if self._send_request('POST', uri, data=data) == 201:
-            return self.rsp.json()[self._data_name]['id']
-        else:
-            raise TGRequestFailure("Creation Failed")
+        if self._request("POST", self.url % "", data={self.name: data}) == 201:
+            return self.response.json()[self.name]
+        raise errors.CreateObjectError(message=self.response.content)
 
     # update a specific record
     def update(self, pk, data):
-        uri = self.uri % str(pk)
-        data = self._build_data(data)
-
-        if self._send_request('PUT', uri, data=data) == 204:
+        if (
+            self._request("PUT", self.url % str(pk), data={self.name: data})
+            == 204
+        ):
             return True
-        else:
-            raise TGRequestFailure("Update Failed")
+        raise errors.UpdateObjectError(message=self.response.content)
+
+    # delete a specific record
+    def delete(self, pk):
+        if self._request("DELETE", self.url % str(pk)) == 204:
+            return True
+        raise errors.DeleteObjectError(message=self.response.content)
 
     def page_count(self, limit=100):
-        tg_items = self.filter(page='1', limit='1')
-        return int(math.ceil(tg_items['meta']['total'] / float(limit)))
-
+        tg_items = self.filter(page="1", limit="1")
+        return int(math.ceil(tg_items["meta"]["total"] / float(limit)))

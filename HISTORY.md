@@ -1,4 +1,10 @@
-Version 0.0.7 - November, 2015
+# History
+
+## Version 0.0.8 - October, 2019
+
+- Refactor.
+
+## Version 0.0.7 - November, 2015
 
 - Removed cruft and simplified endpoint model
 - Added endpoints for purchase orders and purchase order line items

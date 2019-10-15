@@ -1,76 +1,101 @@
-from .api import ApiEndpoint
-
-
-class Composition(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(Composition, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'variants/%s/composition'
-        self._data_name = 'variants'
+from tradegecko.api import ApiEndpoint
 
 
 class Company(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(Company, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'companies/%s'
-        self.required_fields = ['name', 'company_type']
-        self._data_name = 'company'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/companies/%s",
+            auth_token=auth_token,
+            name="company",
+            name_list="companies",
+            required_fields=["name", "company_type"],
+        )
 
 
 class Address(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(Address, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'addresses/%s'
-        self.required_fields = ['company_id', 'label']
-        self._data_name = 'address'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/addresses/%s",
+            auth_token=auth_token,
+            name="address",
+            name_list="addresses",
+            required_fields=["company_id", "label"],
+        )
 
 
 class Location(ApiEndpoint):
-    def __init__(self, base_data, access_token):
-        super(Location, self).__init__(base_data, access_token)
-        self.uri = self.base_uri + 'locations/%s'
-        self.required_fields = ['label']
-        self._data_name = 'location'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/locations/%s",
+            auth_token=auth_token,
+            name="location",
+            name_list="locations",
+            required_fields=["label"],
+        )
 
 
 class PurchaseOrder(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(PurchaseOrder, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'purchase_orders/%s'
-        self.required_fields = ['company_id', 'stock_location_id']
-        self._data_name = 'purchase_order'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/purchase_orders/%s",
+            auth_token=auth_token,
+            name="purchase_order",
+            name_list="purchase_orders",
+            required_fields=["company_id", "stock_location_id"],
+        )
 
 
 class PurchaseOrderLineItem(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(PurchaseOrderLineItem, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'purchase_order_line_items/%s'
-        self.required_fields = ['variant_id', 'quantity', 'price', 'purchase_order_id']
-        self._data_name = 'purchase_order_line_item'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/purchase_order_line_items/%s",
+            auth_token=auth_token,
+            name="purchase_order_line_item",
+            name_list="purchase_order_line_items",
+            required_fields=[
+                "variant_id",
+                "quantity",
+                "price",
+                "purchase_order_id",
+            ],
+        )
 
 
 class Variant(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(Variant, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'variants/%s'
-        self._data_name = 'variants'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/variants/%s",
+            auth_token=auth_token,
+            name="variants",
+            name_list="variants",
+        )
 
 
 class Product(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(Product, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'products/%s'
-        self._data_name = 'products'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/products/%s",
+            auth_token=auth_token,
+            name="products",
+            name_list="products",
+        )
 
 
 class Order(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(Order, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'orders/%s'
-        self._data_name = 'order'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/orders/%s",
+            auth_token=auth_token,
+            name="order",
+            name_list="orders",
+        )
 
 
 class Invoice(ApiEndpoint):
-    def __init__(self, base_uri, access_token):
-        super(Invoice, self).__init__(base_uri, access_token)
-        self.uri = self.base_uri + 'invoices/%s'
-        self._data_name = 'invoice'
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/invoices/%s",
+            auth_token=auth_token,
+            name="invoice",
+            name_list="invoices",
+        )

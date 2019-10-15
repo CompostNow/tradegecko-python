@@ -1,15 +1,36 @@
+import io
 from setuptools import setup, find_packages
+from tradegecko.version import __version__
+
+author = "Drew Kowalik, Chris Clark"
+author_email = "team@epantry.com"
+maintainer = "Viktor Kerkez"
+maintainer_email = "alefnula@gmail.com"
+url = "https://github.com/jegorami/tradegecko-python"
 
 
 setup(
-    name = 'tradegecko-python',
-    version = '0.0.7',
-    description = 'Python wrapper for TradeGecko REST API',
-    author = 'Drew Kowalik, Chris Clark',
-    author_email = 'team@epantry.com',
-    url = 'https://github.com/epantry/tradegecko-python',
-    keywords = ['tradegecko'],
-    install_requires = ['requests'],
-    packages = find_packages(),
+    name="tradegecko-python",
+    version=__version__,
+    author=author,
+    author_email=author_email,
+    maintainer=author,
+    maintainer_email=author_email,
+    url=url,
+    description="Python wrapper for TradeGecko REST API",
+    long_description=io.open("README.md", "r", encoding="utf-8").read(),
+    long_description_content_type="text/markdown",
+    platforms=["Windows", "POSIX", "MacOS"],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.7",
+        "License :: OSI Approved :: MIT",
+        "Operating System :: OS Independent",
+        "Intended Audience :: Developers",
+    ],
+    license="MIT",
+    packages=find_packages(),
+    install_requires=io.open("requirements.txt").read().splitlines(),
+    keywords=["tradegecko"],
     include_package_data=True,
 )
