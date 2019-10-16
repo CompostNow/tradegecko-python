@@ -22,14 +22,13 @@ class TradeGecko(object):
                 "TRADEGECKO_API_URL", "https://api.tradegecko.com"
             )
         ).rstrip("/")
-
         self.auth_token = auth_token or os.environ.get(
             "TRADEGECKO_AUTH_TOKEN", None
         )
-        if not auth_token:
+        if not self.auth_token:
             raise errors.AuthenticationError(
                 "No TradeGecko auth token. Pass it into client constructor or "
-                "set env var TRADEGECKO_ACCESS_TOKEN"
+                "set env var TRADEGECKO_AUTH_TOKEN"
             )
 
         # Endpoints
