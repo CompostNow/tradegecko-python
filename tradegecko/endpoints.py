@@ -81,6 +81,16 @@ class Product(ApiEndpoint):
         )
 
 
+class OrderLineItem(ApiEndpoint):
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/order_line_items/%s",
+            auth_token=auth_token,
+            name="order_line_item",
+            name_list="order_line_items",
+        )
+
+
 class Order(ApiEndpoint):
     def __init__(self, api_url, auth_token):
         super().__init__(

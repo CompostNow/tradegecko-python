@@ -6,6 +6,7 @@ from tradegecko.endpoints import (
     Address,
     Variant,
     Product,
+    OrderLineItem,
     Order,
     Location,
     PurchaseOrder,
@@ -45,6 +46,9 @@ class TradeGecko(object):
             api_url=self.api_url, auth_token=self.auth_token
         )
         self.product = Product(
+            api_url=self.api_url, auth_token=self.auth_token
+        )
+        self.order_line_item = OrderLineItem(
             api_url=self.api_url, auth_token=self.auth_token
         )
         self.order = Order(api_url=self.api_url, auth_token=self.auth_token)
