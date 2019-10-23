@@ -25,4 +25,5 @@ from tradegecko.errors import (
     UpdateObjectError,
     DeleteObjectError,
 )
+
 from tradegecko.version import version, __version__

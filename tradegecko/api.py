@@ -1,8 +1,6 @@
 import math
 import logging
 
-import requests
-
 from tradegecko import errors
 
 
@@ -23,8 +21,12 @@ class ApiEndpoint(object):
         self.name_list = name_list
         self.required_fields = required_fields or []
 
+        import requests
+
+        self.__request = requests.request
+
     def _request(self, method, uri, data=None, params=None):
-        self.response = requests.request(
+        self.response = self.__request(
             method,
             uri,
             json=data,
