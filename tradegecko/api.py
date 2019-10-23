@@ -24,6 +24,11 @@ class ApiEndpoint(object):
         import requests
 
         self.__request = requests.request
+        # Supress warnings
+        import requests
+        from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
     def _request(self, method, uri, data=None, params=None):
         self.response = self.__request(
