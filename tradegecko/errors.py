@@ -1,18 +1,25 @@
 import json
 from typing import Dict, Any, Optional
 
+from requests import Response
+
 
 class TradeGeckoError(Exception):
-    def __init__(self, message: str):
+    def __init__(self, message: str, response: Optional[Response] = None):
         self.message = message
+        self.response = response
         try:
-            self.data: Dict[str, Any] = json.loads(message)
+            self.data: Dict[str, Any] = json.loads(response.content)
         except Exception:
             self.data: Dict[str, Any] = {}
 
     @property
     def name(self):
         return self.__class__.__name__
+
+    @property
+    def type(self) -> Optional[str]:
+        return self.data.get("type", None)
 
     def get(self, key: str, default: Any = None) -> Optional[Any]:
         """Return the value from the data dict.
