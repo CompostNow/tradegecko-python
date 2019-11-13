@@ -1,17 +1,21 @@
 import io
 from setuptools import setup, find_packages
-from tradegecko.version import __version__
 
 author = "Drew Kowalik, Chris Clark"
 author_email = "team@epantry.com"
 maintainer = "Viktor Kerkez"
 maintainer_email = "alefnula@gmail.com"
-url = "https://github.com/jegorami/tradegecko-python"
+url = "https://github.com/alefnula/tradegecko-python"
+
+# Get version
+version_module = {}
+exec(io.open("tradegecko/version.py", "r").read(), version_module)
+version = version_module["version"]
 
 
 setup(
     name="tradegecko-python",
-    version=__version__,
+    version=f"{version}",
     author=author,
     author_email=author_email,
     maintainer=author,

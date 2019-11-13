@@ -2,12 +2,12 @@ import math
 import logging
 
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 from tradegecko import errors
 
-# Suppress warnings
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# Disable warnings, they are just annoyance.
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
