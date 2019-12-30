@@ -12,6 +12,9 @@ from tradegecko.endpoints import (
     PurchaseOrder,
     PurchaseOrderLineItem,
     Invoice,
+    Currency,
+    PaymentTerm,
+    Fulfillment,
 )
 
 
@@ -59,5 +62,14 @@ class TradeGecko(object):
             api_url=self.api_url, auth_token=self.auth_token
         )
         self.purchase_order_line_item = PurchaseOrderLineItem(
+            api_url=self.api_url, auth_token=self.auth_token
+        )
+        self.currency = Currency(
+            api_url=self.api_url, auth_token=self.auth_token
+        )
+        self.payment_term = PaymentTerm(
+            api_url=self.api_url, auth_token=self.auth_token
+        )
+        self.fulfillment = Fulfillment(
             api_url=self.api_url, auth_token=self.auth_token
         )

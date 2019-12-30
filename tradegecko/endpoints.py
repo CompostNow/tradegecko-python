@@ -109,3 +109,33 @@ class Invoice(ApiEndpoint):
             name="invoice",
             name_list="invoices",
         )
+
+
+class Currency(ApiEndpoint):
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/currencies/%s",
+            auth_token=auth_token,
+            name="currency",
+            name_list="currencies",
+        )
+
+
+class PaymentTerm(ApiEndpoint):
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/payment_terms/%s",
+            auth_token=auth_token,
+            name="payment_term",
+            name_list="payment_terms",
+        )
+
+
+class Fulfillment(ApiEndpoint):
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/fulfillments/%s",
+            auth_token=auth_token,
+            name="fulfillment",
+            name_list="fulfillments",
+        )
