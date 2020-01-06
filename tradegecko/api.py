@@ -97,7 +97,7 @@ class ApiEndpoint(object):
     def update(self, pk, data):
         if (
             self._request("PUT", self.url % str(pk), data={self.name: data})
-            == 204
+            in (200, 204)
         ):
             return True
         raise errors.UpdateObjectError(
