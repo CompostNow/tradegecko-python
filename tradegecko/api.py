@@ -19,7 +19,7 @@ class ApiEndpoint(object):
         self.url = url
         self.auth_token = auth_token
         self.header = {
-            "Authorization": f"Bearer {self.auth_token}",
+            "Authorization": "Bearer "+ self.auth_token,
             "content-type": "application/json",
         }
         self.response = None
@@ -66,7 +66,7 @@ class ApiEndpoint(object):
         if self._request("GET", self.url % "", params={"page": page}) == 200:
             return self.response.json()[self.name_list]
         raise errors.ListObjectsError(
-            message=f"List {self.name_list} failed.", response=self.response
+            message="List {} failed.".format(self.name_list), response=self.response
         )
 
     # records filtered by field value
@@ -74,15 +74,29 @@ class ApiEndpoint(object):
         if self._request("GET", self.url % "", params=kwargs) == 200:
             return self.response.json()[self.name_list]
         raise errors.ListObjectsError(
-            message=f"Filter {self.name_list} failed.", response=self.response
+            message="Filter {} failed.".format(self.name_list), response=self.response
         )
 
     # retrieve a specific record
-    def get(self, pk):
-        if self._request("GET", self.url % str(pk)) == 200:
-            return self.response.json()[self.name]
+    def get(self, pk, **kwargs):
+        if self._request("GET", self.url % str(pk), params=kwargs) == 200:
+            json_response = self.response.json()
+
+            if 'include' in kwargs:
+                # When slideloading resources, move them inside the primary resource for easy access
+                include = {}
+
+                #for key, value in json_response.items():   #TODO: Python3+
+                for key, value in json_response.iteritems():
+                    if key != self.name:
+                        include[key] = value
+
+                json_response[self.name]['include'] = include
+
+
+            return json_response[self.name]
         raise errors.GetObjectError(
-            message=f"Get {self.name} failed.", response=self.response
+            message="Get {} failed.".format(self.name), response=self.response
         )
 
     # create a new record
@@ -90,7 +104,7 @@ class ApiEndpoint(object):
         if self._request("POST", self.url % "", data={self.name: data}) == 201:
             return self.response.json()[self.name]
         raise errors.CreateObjectError(
-            message=f"Create {self.name} failed.", response=self.response
+            message="Create {} failed.".format(self.name), response=self.response
         )
 
     # update a specific record
@@ -101,7 +115,7 @@ class ApiEndpoint(object):
         ):
             return True
         raise errors.UpdateObjectError(
-            message=f"Update {self.name} failed.", response=self.response
+            message="Update {} failed.".format(self.name), response=self.response
         )
 
     # delete a specific record
@@ -109,7 +123,7 @@ class ApiEndpoint(object):
         if self._request("DELETE", self.url % str(pk)) == 204:
             return True
         raise errors.DeleteObjectError(
-            message=f"Delete {self.name} failed.", response=self.response
+            message="Delete {} failed.".format(self.name), response=self.response
         )
 
     def page_count(self, limit=100):

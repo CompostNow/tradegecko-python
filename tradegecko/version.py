@@ -1,15 +1,13 @@
-from dataclasses import dataclass
-
-
-@dataclass
 class Version:
-    major: int
-    minor: int
-    build: int
+
+    def __init__(self, major, minor, build):
+        self.major = major
+        self.minor = minor
+        self.build = build
 
     def __str__(self):
-        return f"{self.major}.{self.minor}.{self.build}"
+        return "{}.{}.{}".format(self.major, self.minor, self.build)
 
 
-version = Version(0, 0, 8)
+version = Version(0, 0, 9)
 __version__ = str(version)

@@ -15,7 +15,7 @@ version = version_module["version"]
 
 setup(
     name="tradegecko-python",
-    version=f"{version}",
+    version="{}".format(version),
     author=author,
     author_email=author_email,
     maintainer=author,

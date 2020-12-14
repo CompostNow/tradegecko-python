@@ -15,6 +15,7 @@ from tradegecko.endpoints import (
     Currency,
     PaymentTerm,
     Fulfillment,
+    Webhook,
 )
 
 
@@ -71,5 +72,8 @@ class TradeGecko(object):
             api_url=self.api_url, auth_token=self.auth_token
         )
         self.fulfillment = Fulfillment(
+            api_url=self.api_url, auth_token=self.auth_token
+        )
+        self.webhook = Webhook(
             api_url=self.api_url, auth_token=self.auth_token
         )

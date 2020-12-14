@@ -3,8 +3,8 @@ from tradegecko.api import ApiEndpoint
 
 class Company(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/companies/%s",
+        super(Company, self).__init__(
+            url=api_url + "/companies/%s",
             auth_token=auth_token,
             name="company",
             name_list="companies",
@@ -14,8 +14,8 @@ class Company(ApiEndpoint):
 
 class Address(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/addresses/%s",
+        super(Address, self).__init__(
+            url=api_url + "/addresses/%s",
             auth_token=auth_token,
             name="address",
             name_list="addresses",
@@ -25,8 +25,8 @@ class Address(ApiEndpoint):
 
 class Location(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/locations/%s",
+        super(Location, self).__init__(
+            url=api_url + "/locations/%s",
             auth_token=auth_token,
             name="location",
             name_list="locations",
@@ -36,8 +36,8 @@ class Location(ApiEndpoint):
 
 class PurchaseOrder(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/purchase_orders/%s",
+        super(PurchaseOrder, self).__init__(
+            url=api_url + "/purchase_orders/%s",
             auth_token=auth_token,
             name="purchase_order",
             name_list="purchase_orders",
@@ -47,8 +47,8 @@ class PurchaseOrder(ApiEndpoint):
 
 class PurchaseOrderLineItem(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/purchase_order_line_items/%s",
+        super(PurchaseOrderLineItem, self).__init__(
+            url=api_url + "/purchase_order_line_items/%s",
             auth_token=auth_token,
             name="purchase_order_line_item",
             name_list="purchase_order_line_items",
@@ -63,8 +63,8 @@ class PurchaseOrderLineItem(ApiEndpoint):
 
 class Variant(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/variants/%s",
+        super(Variant, self).__init__(
+            url=api_url + "/variants/%s",
             auth_token=auth_token,
             name="variants",
             name_list="variants",
@@ -73,8 +73,8 @@ class Variant(ApiEndpoint):
 
 class Product(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/products/%s",
+        super(Product, self).__init__(
+            url=api_url + "/products/%s",
             auth_token=auth_token,
             name="products",
             name_list="products",
@@ -83,8 +83,8 @@ class Product(ApiEndpoint):
 
 class OrderLineItem(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/order_line_items/%s",
+        super(OrderLineItem, self).__init__(
+            url=api_url + "/order_line_items/%s",
             auth_token=auth_token,
             name="order_line_item",
             name_list="order_line_items",
@@ -93,8 +93,8 @@ class OrderLineItem(ApiEndpoint):
 
 class Order(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/orders/%s",
+        super(Order, self).__init__(
+            url=api_url + "/orders/%s",
             auth_token=auth_token,
             name="order",
             name_list="orders",
@@ -103,8 +103,8 @@ class Order(ApiEndpoint):
 
 class Invoice(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/invoices/%s",
+        super(Invoice, self).__init__(
+            url=api_url + "/invoices/%s",
             auth_token=auth_token,
             name="invoice",
             name_list="invoices",
@@ -113,8 +113,8 @@ class Invoice(ApiEndpoint):
 
 class Currency(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/currencies/%s",
+        super(Currency, self).__init__(
+            url=api_url + "/currencies/%s",
             auth_token=auth_token,
             name="currency",
             name_list="currencies",
@@ -123,8 +123,8 @@ class Currency(ApiEndpoint):
 
 class PaymentTerm(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/payment_terms/%s",
+        super(PaymentTerm, self).__init__(
+            url=api_url + "/payment_terms/%s",
             auth_token=auth_token,
             name="payment_term",
             name_list="payment_terms",
@@ -133,9 +133,18 @@ class PaymentTerm(ApiEndpoint):
 
 class Fulfillment(ApiEndpoint):
     def __init__(self, api_url, auth_token):
-        super().__init__(
-            url=f"{api_url}/fulfillments/%s",
+        super(Fulfillment, self).__init__(
+            url=api_url + "/fulfillments/%s",
             auth_token=auth_token,
             name="fulfillment",
             name_list="fulfillments",
+        )
+
+class Webhook(ApiEndpoint):
+    def __init__(self, api_url, auth_token):
+        super(Webhook, self).__init__(
+            url=api_url + "/webhooks/%s",
+            auth_token=auth_token,
+            name="webhook",
+            name_list="webhooks",
         )

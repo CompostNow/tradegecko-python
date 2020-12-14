@@ -1,5 +1,11 @@
 # History
 
+## Version 0.0.9 - December, 2020
+
+- Backport to Python 2.7
+- Add webhook endpoint
+- Add sideloading support to GET requests
+
 ## Version 0.0.8 - October, 2019
 
 - Refactor.

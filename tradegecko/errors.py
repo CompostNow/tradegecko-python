@@ -1,27 +1,26 @@
 import json
-from typing import Dict, Any, Optional
 
 from requests import Response
 
 
 class TradeGeckoError(Exception):
-    def __init__(self, message: str, response: Optional[Response] = None):
+    def __init__(self, message, response=None):
         self.message = message
         self.response = response
         try:
-            self.data: Dict[str, Any] = json.loads(response.content)
+            self.data = json.loads(response.content)
         except Exception:
-            self.data: Dict[str, Any] = {}
+            self.data  = {}
 
     @property
     def name(self):
         return self.__class__.__name__
 
     @property
-    def type(self) -> Optional[str]:
+    def type(self):
         return self.data.get("type", None)
 
-    def get(self, key: str, default: Any = None) -> Optional[Any]:
+    def get(self, key, default=None):
         """Return the value from the data dict.
 
         If the key is not found default value will be returned.
@@ -29,7 +28,7 @@ class TradeGeckoError(Exception):
         return self.data.get(key, default=default)
 
     def __str__(self):
-        return f"{self.name}({self.message})"
+        return "{}({})".format(self.name, self.message)
 
     __repr__ = __str__
 
