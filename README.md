@@ -1,6 +1,3 @@
-![travis](https://travis-ci.org/jegorami/tradegecko-python.png?branch=master
-
-
 # Python wrapper for TradeGecko API.
 
 ## Install
@@ -15,7 +12,7 @@
 from tradegecko import TradeGecko
 
 # Initialize client
-tg = TradeGecko(access_token, refresh_token)
+tg = TradeGecko(auth_token=access_token)
 
 # Create company
 tg.company.create(**company_data)
