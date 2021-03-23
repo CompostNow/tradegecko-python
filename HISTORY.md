@@ -1,5 +1,10 @@
 # History
 
+## Version 0.0.9 - March, 2021
+
+- Add webhook endpoint
+- Add sideloading support to GET requests
+
 ## Version 0.0.8 - October, 2019
 
 - Refactor.
