@@ -78,9 +78,22 @@ class ApiEndpoint(object):
         )
 
     # retrieve a specific record
-    def get(self, pk):
-        if self._request("GET", self.url % str(pk)) == 200:
-            return self.response.json()[self.name]
+    def get(self, pk, **kwargs):
+        if self._request("GET", self.url % str(pk), params=kwargs) == 200:
+            json_response = self.response.json()
+
+            if 'include' in kwargs:
+                # When slideloading resources, move them inside the primary resource for easy access
+                include = {}
+
+                for key, value in json_response.items():
+                    if key != self.name:
+                        include[key] = value
+
+                json_response[self.name]['include'] = include
+
+
+            return json_response[self.name]
         raise errors.GetObjectError(
             message=f"Get {self.name} failed.", response=self.response
         )

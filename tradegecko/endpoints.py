@@ -139,3 +139,13 @@ class Fulfillment(ApiEndpoint):
             name="fulfillment",
             name_list="fulfillments",
         )
+
+
+class Webhook(ApiEndpoint):
+    def __init__(self, api_url, auth_token):
+        super().__init__(
+            url=f"{api_url}/webhooks/%s",
+            auth_token=auth_token,
+            name="webhook",
+            name_list="webhooks",
+        )
